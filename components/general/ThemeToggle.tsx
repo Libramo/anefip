@@ -11,9 +11,10 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Switch } from "../ui/switch";
 
 export function ThemeToggle() {
-  const { setTheme } = useTheme();
+  const { theme, setTheme } = useTheme();
 
   return (
     <DropdownMenu>
@@ -36,5 +37,12 @@ export function ThemeToggle() {
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
+
+    // <Switch
+    //   checked={theme === "dark"}
+    //   onCheckedChange={() => {
+    //     setTheme(theme === "dark" ? "light" : "dark");
+    //   }}
+    // />
   );
 }

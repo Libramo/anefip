@@ -11,17 +11,11 @@ const Navbar = async () => {
   const session = await auth();
 
   return (
-    <nav className="flex items-center justify-between py-5">
+    <nav className="flex items-center justify-between py-2">
       <Link href="/" className="flex items-center gap-2">
-        <Image
-          alt=""
-          src={Logo}
-          height={50}
-          width={50}
-          className="rounded-full"
-        />
+        <Image alt="" src={Logo} className="rounded-full size-20 " />
         <h1 className="text-2xl font-bold">
-          anefip<span className="text-primary">Djib</span>
+          Anefip<span className="text-primary"> Djib</span>
         </h1>
       </Link>
 
