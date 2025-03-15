@@ -41,8 +41,6 @@ interface iAppProps {
     jobTitle: string;
     employmentType: string;
     location: string;
-    salaryFrom: number;
-    salaryTo: number;
     jobDescription: string;
     listingDuration: number;
     benefits: string[];
@@ -187,7 +185,7 @@ export function EditJobForm({ jobPost }: iAppProps) {
                 )}
               />
 
-              <FormItem>
+              {/* <FormItem>
                 <FormLabel>Salary Range</FormLabel>
                 <FormControl>
                   <SalaryRangeSelector
@@ -197,7 +195,7 @@ export function EditJobForm({ jobPost }: iAppProps) {
                     step={2000}
                   />
                 </FormControl>
-              </FormItem>
+              </FormItem> */}
             </div>
 
             <FormField

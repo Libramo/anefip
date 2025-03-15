@@ -16,8 +16,6 @@ async function getData(jobId: string, userId: string) {
       id: true,
       jobTitle: true,
       jobDescription: true,
-      salaryFrom: true,
-      salaryTo: true,
       location: true,
       employmentType: true,
       listingDuration: true,
