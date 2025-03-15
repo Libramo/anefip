@@ -21,7 +21,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
-import { SalaryRangeSelector } from "../general/SalaryRangeSelector";
+// import { SalaryRangeSelector } from "../general/SalaryRangeSelector";
 import { JobDescriptionEditor } from "../richTextEditor.tsx/JobDescriptionEditor";
 import { BenefitsSelector } from "../general/BenefitsSelector";
 import Image from "next/image";
