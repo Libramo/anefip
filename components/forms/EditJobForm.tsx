@@ -48,7 +48,7 @@ interface iAppProps {
     Company: {
       location: string;
       xAccount: string | null;
-      website: string;
+      website: string | null;
       logo: string;
       about: string;
       name: string;
@@ -65,7 +65,7 @@ export function EditJobForm({ jobPost }: iAppProps) {
       companyLocation: jobPost.Company.location,
       companyName: jobPost.Company.name,
       companyLogo: jobPost.Company.logo,
-      companyWebsite: jobPost.Company.website,
+      companyWebsite: jobPost.Company.website || "",
       companyXAccount: jobPost.Company.xAccount || "",
       employmentType: jobPost.employmentType,
       jobDescription: jobPost.jobDescription,
