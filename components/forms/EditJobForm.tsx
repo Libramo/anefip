@@ -1,7 +1,7 @@
 "use client";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { countryList } from "@/app/utils/countriesList";
+import { regionList } from "@/app/utils/countriesList";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import {
   Form,
@@ -74,8 +74,6 @@ export function EditJobForm({ jobPost }: iAppProps) {
       jobTitle: jobPost.jobTitle,
       listingDuration: jobPost.listingDuration,
       location: jobPost.location,
-      salaryFrom: jobPost.salaryFrom,
-      salaryTo: jobPost.salaryTo,
     },
   });
 
@@ -176,10 +174,9 @@ export function EditJobForm({ jobPost }: iAppProps) {
                         </SelectGroup>
                         <SelectGroup>
                           <SelectLabel>Location</SelectLabel>
-                          {countryList.map((country) => (
-                            <SelectItem key={country.code} value={country.name}>
-                              <span>{country.flagEmoji}</span>
-                              <span className="pl-2">{country.name}</span>
+                          {regionList.map((region) => (
+                            <SelectItem key={region.code} value={region.name}>
+                              <span className="pl-2">{region.name}</span>
                             </SelectItem>
                           ))}
                         </SelectGroup>
@@ -278,10 +275,9 @@ export function EditJobForm({ jobPost }: iAppProps) {
                         </SelectGroup>
                         <SelectGroup>
                           <SelectLabel>Location</SelectLabel>
-                          {countryList.map((country) => (
-                            <SelectItem key={country.code} value={country.name}>
-                              <span>{country.flagEmoji}</span>
-                              <span className="pl-2">{country.name}</span>
+                          {regionList.map((region) => (
+                            <SelectItem key={region.code} value={region.name}>
+                              <span className="pl-2">{region.name}</span>
                             </SelectItem>
                           ))}
                         </SelectGroup>
