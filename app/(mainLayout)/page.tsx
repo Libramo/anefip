@@ -21,6 +21,7 @@ export default async function Home({ searchParams }: SearchParams) {
   const filterKey = `page=${currentPage};types=${jobTypes.join(
     ","
   )};location=${location}`;
+
   return (
     <div className="grid grid-cols-4 gap-8">
       <JobFilter />

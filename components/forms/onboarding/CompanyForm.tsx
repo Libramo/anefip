@@ -14,13 +14,10 @@ import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
-  SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { countryList } from "@/app/utils/countriesList";
 import { Textarea } from "@/components/ui/textarea";
 // import { UploadDropzone } from "@/components/general/UploadThingReexported";
 // import { createCompany } from "@/app/actions";
@@ -30,6 +27,7 @@ import Image from "next/image";
 import { XIcon } from "lucide-react";
 import { UploadDropzone } from "@/components/general/UploadThingReexported";
 import { createCompany } from "@/app/actions";
+import { regionList } from "@/app/utils/countriesList";
 
 export function CompanyForm() {
   const form = useForm<z.infer<typeof companySchema>>({
@@ -68,9 +66,11 @@ export function CompanyForm() {
             name="name"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Company Name</FormLabel>
+                <FormLabel>
+                  Nom de la structure <span className="text-red-950">*</span>
+                </FormLabel>
                 <FormControl>
-                  <Input placeholder="Enter company Name" {...field} />
+                  <Input placeholder="Nom de votre structure..." {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -82,32 +82,22 @@ export function CompanyForm() {
             name="location"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Company Location</FormLabel>
+                <FormLabel>Localisation</FormLabel>
                 <Select
                   onValueChange={field.onChange}
                   defaultValue={field.value}
                 >
                   <FormControl>
                     <SelectTrigger>
-                      <SelectValue placeholder="Select Location" />
+                      <SelectValue placeholder="Selectionner Localisation" />
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectGroup>
-                      <SelectLabel>Worldwide</SelectLabel>
-                      <SelectItem value="worldwide">
-                        <span>🌍</span> <span>Worldwide / Remote</span>
+                    {regionList.map((region) => (
+                      <SelectItem key={region.code} value={region.name}>
+                        <span className="pl-2">{region.name}</span>
                       </SelectItem>
-                    </SelectGroup>
-                    <SelectGroup>
-                      <SelectLabel>Location</SelectLabel>
-                      {countryList.map((country) => (
-                        <SelectItem key={country.code} value={country.name}>
-                          <span>{country.flagEmoji}</span>
-                          <span className="pl-2">{country.name}</span>
-                        </SelectItem>
-                      ))}
-                    </SelectGroup>
+                    ))}
                   </SelectContent>
                 </Select>
                 <FormMessage />
@@ -122,9 +112,9 @@ export function CompanyForm() {
             name="website"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Website</FormLabel>
+                <FormLabel>Site web</FormLabel>
                 <FormControl>
-                  <Input placeholder="https://yourcompany.com" {...field} />
+                  <Input placeholder="https://votre-structure.com" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -168,7 +158,7 @@ export function CompanyForm() {
           name="logo"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Logo de l'organisation</FormLabel>
+              <FormLabel>Logo de l&apos;organisation</FormLabel>
               <FormControl>
                 <div>
                   {field.value ? (

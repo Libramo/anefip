@@ -139,8 +139,6 @@ export async function createJob(data: z.infer<typeof jobSchema>) {
       jobTitle: validateData.jobTitle,
       employmentType: validateData.employmentType,
       location: validateData.location,
-      salaryFrom: validateData.salaryFrom,
-      salaryTo: validateData.salaryTo,
       listingDuration: validateData.listingDuration,
       benefits: validateData.benefits,
       companyId: company.id,
@@ -155,7 +153,7 @@ export async function createJob(data: z.infer<typeof jobSchema>) {
   );
 
   if (!pricingTier) {
-    throw new Error("Invalid Listing duration selected");
+    throw new Error("Durée d'inscription sélectionnée invalide");
   }
 
   await inngest.send({
@@ -176,7 +174,7 @@ export async function createJob(data: z.infer<typeof jobSchema>) {
             description: pricingTier.description,
             images: [company.logo],
           },
-          currency: "USD",
+          currency: "FDJ",
           unit_amount: pricingTier.price * 100,
         },
         quantity: 1,
@@ -266,8 +264,6 @@ export async function editJobPost(
       jobTitle: validateData.jobTitle,
       employmentType: validateData.employmentType,
       location: validateData.location,
-      salaryFrom: validateData.salaryFrom,
-      salaryTo: validateData.salaryTo,
       listingDuration: validateData.listingDuration,
       benefits: validateData.benefits,
     },
@@ -296,10 +292,10 @@ export async function deleteJobPost(jobId: string) {
     },
   });
 
-  await inngest.send({
-    name: "job/cancel.expiration",
-    data: { jobId: jobId },
-  });
+  // await inngest.send({
+  //   name: "job/cancel.expiration",
+  //   data: { jobId: jobId },
+  // });
 
   return redirect("/my-jobs");
 }

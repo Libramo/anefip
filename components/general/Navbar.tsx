@@ -3,9 +3,9 @@ import Link from "next/link";
 import React from "react";
 
 import Logo from "@/public/logo.png";
-import { Button, buttonVariants } from "../ui/button";
+import { buttonVariants } from "../ui/button";
 import { ThemeToggle } from "./ThemeToggle";
-import { auth, signOut } from "@/auth";
+import { auth } from "@/auth";
 import { UserDropdown } from "./UserDropdown";
 const Navbar = async () => {
   const session = await auth();
@@ -23,7 +23,7 @@ const Navbar = async () => {
       <div className="hidden md:flex items-center gap-5">
         <ThemeToggle />
         <Link className={buttonVariants({ size: "lg" })} href="/post-job">
-          Post Job
+          Poster une offre
         </Link>
         {session?.user ? (
           <UserDropdown
@@ -36,7 +36,7 @@ const Navbar = async () => {
             href="/login"
             className={buttonVariants({ variant: "outline", size: "lg" })}
           >
-            Login
+            Connexion
           </Link>
         )}
       </div>

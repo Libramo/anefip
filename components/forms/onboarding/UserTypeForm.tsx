@@ -12,7 +12,7 @@ export function UserTypeSelection({ onSelect }: UserTypeSelectionProps) {
     <div className="space-y-8">
       <div className="text-center space-y-2">
         <h2 className="text-2xl font-bold">
-          Bienvenue sur la plateforme de l'ANEFIP
+          Bienvenue sur la plateforme de l&apos;ANEFIP
         </h2>
         {/* <p className="text-muted-foreground">
           Choose how you would like to use our platform!
@@ -31,7 +31,7 @@ export function UserTypeSelection({ onSelect }: UserTypeSelectionProps) {
 
           <div className="text-left">
             <h3 className="font-semibold text-lg">Institution / Entreprise</h3>
-            <p>Postez vos offres d'emplois</p>
+            <p>Postez vos offres d&apos;emplois</p>
           </div>
         </Button>
 
@@ -45,8 +45,8 @@ export function UserTypeSelection({ onSelect }: UserTypeSelectionProps) {
           </div>
 
           <div className="text-left">
-            <h3 className="font-semibold text-lg">Demandeur d'emploi</h3>
-            <p>Accedez à des opportunité d'emplois </p>
+            <h3 className="font-semibold text-lg">Demandeur d&apos;emploi</h3>
+            <p>Accedez à des opportunité d&apos;emplois </p>
           </div>
         </Button>
       </div>

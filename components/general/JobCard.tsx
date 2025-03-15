@@ -1,9 +1,9 @@
 import Link from "next/link";
 import { Card, CardHeader } from "../ui/card";
-import { MapPin, MoveHorizontal } from "lucide-react";
+import { MapPin } from "lucide-react";
 import Image from "next/image";
 import { Badge } from "../ui/badge";
-import { formatCurrency } from "@/app/utils/formatCurrency";
+// import { formatCurrency } from "@/app/utils/formatCurrency";
 import { formatRelativeTime } from "@/app/utils/formatRelativeTime";
 import { Separator } from "../ui/separator";
 
@@ -20,8 +20,6 @@ interface iAppProps {
     jobTitle: string;
     employmentType: string;
     location: string;
-    salaryFrom: number;
-    salaryTo: number;
   };
 }
 
@@ -60,13 +58,13 @@ export function JobCard({ job }: iAppProps) {
 
                 <Separator orientation="vertical" className="bg-primary" />
 
-                <p className="flex space-x-3 text-sm text-muted-foreground">
+                {/* <p className="flex space-x-3 text-sm text-muted-foreground">
                   {formatCurrency(job.salaryFrom)}{" "}
                   <span>
                     <MoveHorizontal />
                   </span>
                   {formatCurrency(job.salaryTo)}
-                </p>
+                </p> */}
               </div>
             </div>
 

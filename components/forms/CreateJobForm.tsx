@@ -24,7 +24,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
-import { countryList } from "@/app/utils/countriesList";
+import { regionList } from "@/app/utils/countriesList";
 // import { JobDescriptionEditor } from "../richTextEditor.tsx/JobDescriptionEditor";
 // import { BenefitsSelector } from "../general/BenefitsSelector";
 import { Textarea } from "../ui/textarea";
@@ -35,7 +35,7 @@ import { UploadDropzone } from "../general/UploadThingReexported";
 // import { JobLisitingDuration } from "../general/JobLisitingDurationSelector";
 import { createJob } from "@/app/actions";
 import { useState } from "react";
-import { SalaryRangeSelector } from "../general/SalaryRangeSelector";
+// import { SalaryRangeSelector } from "../general/SalaryRangeSelector";
 import { BenefitsSelector } from "../general/BenefitsSelector";
 import { JobLisitingDuration } from "../general/JobLisitingDurationSelector";
 import { JobDescriptionEditor } from "../richTextEditor.tsx/JobDescriptionEditor";
@@ -72,8 +72,6 @@ export function CreateJobForm({
       jobTitle: "",
       listingDuration: 30,
       location: "",
-      salaryFrom: 0,
-      salaryTo: 0,
     },
   });
 
@@ -98,8 +96,8 @@ export function CreateJobForm({
         className="col-span-1 lg:col-span-2 flex flex-col gap-8"
       >
         <Card>
-          <CardHeader>
-            <CardTitle>Job Information</CardTitle>
+          <CardHeader className="mb-2">
+            <CardTitle>Informations sur l&apos;offre d&apos;emploi</CardTitle>
           </CardHeader>
           <CardContent className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -108,7 +106,7 @@ export function CreateJobForm({
                 name="jobTitle"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Job Title</FormLabel>
+                    <FormLabel>Titre de l&apos;offre</FormLabel>
                     <FormControl>
                       <Input placeholder="Job title" {...field} />
                     </FormControl>
@@ -122,24 +120,20 @@ export function CreateJobForm({
                 name="employmentType"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Employment Type</FormLabel>
+                    <FormLabel>Type d&apos;emploi</FormLabel>
                     <Select
                       onValueChange={field.onChange}
                       defaultValue={field.value}
                     >
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder="Select Emplyoment Type" />
+                          <SelectValue placeholder="Selectionner le type d'emploi" />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        <SelectGroup>
-                          <SelectLabel>Employment Type</SelectLabel>
-                          <SelectItem value="full-time">Full Time</SelectItem>
-                          <SelectItem value="part-time">Part Time</SelectItem>
-                          <SelectItem value="contract">Contract</SelectItem>
-                          <SelectItem value="internship">Internship</SelectItem>
-                        </SelectGroup>
+                        <SelectItem value="temps-plein">Temps plein</SelectItem>
+                        <SelectItem value="mi-temps">Mi-temps</SelectItem>
+                        <SelectItem value="stage">Stage</SelectItem>
                       </SelectContent>
                     </Select>
                     <FormMessage />
@@ -154,33 +148,22 @@ export function CreateJobForm({
                 name="location"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Job Location</FormLabel>
+                    <FormLabel>Lieu</FormLabel>
                     <Select
                       onValueChange={field.onChange}
                       defaultValue={field.value}
                     >
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder="Select Location" />
+                          <SelectValue placeholder="Selectionner lieu" />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        <SelectGroup>
-                          <SelectLabel>Worldwide</SelectLabel>
-                          <SelectItem value="worldwide">
-                            <span>🌍</span>
-                            <span className="pl-2">Worldwide / Remote</span>
+                        {regionList.map((region) => (
+                          <SelectItem key={region.code} value={region.name}>
+                            <span className="pl-2">{region.name}</span>
                           </SelectItem>
-                        </SelectGroup>
-                        <SelectGroup>
-                          <SelectLabel>Location</SelectLabel>
-                          {countryList.map((country) => (
-                            <SelectItem key={country.code} value={country.name}>
-                              <span>{country.flagEmoji}</span>
-                              <span className="pl-2">{country.name}</span>
-                            </SelectItem>
-                          ))}
-                        </SelectGroup>
+                        ))}
                       </SelectContent>
                     </Select>
                     <FormMessage />
@@ -188,7 +171,7 @@ export function CreateJobForm({
                 )}
               />
 
-              <FormItem>
+              {/* <FormItem>
                 <FormLabel>Salary Range</FormLabel>
                 <FormControl>
                   <SalaryRangeSelector
@@ -198,7 +181,7 @@ export function CreateJobForm({
                     step={2000}
                   />
                 </FormControl>
-              </FormItem>
+              </FormItem> */}
             </div>
 
             <FormField
@@ -206,7 +189,7 @@ export function CreateJobForm({
               name="jobDescription"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Job Description</FormLabel>
+                  <FormLabel>Details de l&apos;offre</FormLabel>
                   <FormControl>
                     <JobDescriptionEditor field={field as any} />
                   </FormControl>
@@ -220,7 +203,7 @@ export function CreateJobForm({
               name="benefits"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Benefits</FormLabel>
+                  <FormLabel className="mb-3">Avantages</FormLabel>
                   <FormControl>
                     <BenefitsSelector field={field as any} />
                   </FormControl>
@@ -233,7 +216,7 @@ export function CreateJobForm({
 
         <Card>
           <CardHeader>
-            <CardTitle>Company Information</CardTitle>
+            <CardTitle>Information sur l&apos;employeur</CardTitle>
           </CardHeader>
           <CardContent className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -242,44 +225,35 @@ export function CreateJobForm({
                 name="companyName"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Company name</FormLabel>
+                    <FormLabel>Nom de la structure</FormLabel>
                     <FormControl>
-                      <Input placeholder="Company name..." {...field} />
+                      <Input placeholder="Nom de la strucuture..." {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
-
               <FormField
                 control={form.control}
                 name="companyLocation"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Company Location</FormLabel>
+                    <FormLabel>Lieu</FormLabel>
                     <Select
                       onValueChange={field.onChange}
                       defaultValue={field.value}
                     >
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder="Select Location" />
+                          <SelectValue placeholder="Selectionner lieu" />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
                         <SelectGroup>
-                          <SelectLabel>Worldwide</SelectLabel>
-                          <SelectItem value="worldwide">
-                            <span>🌍</span>
-                            <span className="pl-2">Worldwide / Remote</span>
-                          </SelectItem>
-                        </SelectGroup>
-                        <SelectGroup>
                           <SelectLabel>Location</SelectLabel>
-                          {countryList.map((country) => (
-                            <SelectItem key={country.code} value={country.name}>
-                              <span>{country.flagEmoji}</span>
-                              <span className="pl-2">{country.name}</span>
+                          {regionList.map((region) => (
+                            <SelectItem key={region.code} value={region.name}>
+                              <span className="pl-2">{region.name}</span>
                             </SelectItem>
                           ))}
                         </SelectGroup>
@@ -297,7 +271,7 @@ export function CreateJobForm({
                 name="companyWebsite"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Company Website</FormLabel>
+                    <FormLabel>Site web de la structure</FormLabel>
                     <FormControl>
                       <Input placeholder="Company Website..." {...field} />
                     </FormControl>
@@ -306,7 +280,7 @@ export function CreateJobForm({
                 )}
               />
 
-              <FormField
+              {/* <FormField
                 control={form.control}
                 name="companyXAccount"
                 render={({ field }) => (
@@ -318,7 +292,7 @@ export function CreateJobForm({
                     <FormMessage />
                   </FormItem>
                 )}
-              />
+              /> */}
             </div>
 
             <FormField
@@ -326,7 +300,7 @@ export function CreateJobForm({
               name="companyAbout"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Company Description</FormLabel>
+                  <FormLabel>Details de la structure</FormLabel>
                   <FormControl>
                     <Textarea
                       placeholder="Say something about your company"
@@ -344,7 +318,7 @@ export function CreateJobForm({
               name="companyLogo"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Company Logo</FormLabel>
+                  <FormLabel>Logo</FormLabel>
                   <FormControl>
                     <div>
                       {field.value ? (
@@ -389,7 +363,7 @@ export function CreateJobForm({
 
         <Card>
           <CardHeader>
-            <CardTitle>Job Listing Duration</CardTitle>
+            <CardTitle>Durée d&apos;exposition de l&apos;offre</CardTitle>
           </CardHeader>
           <CardContent>
             <FormField
@@ -408,7 +382,7 @@ export function CreateJobForm({
         </Card>
 
         <Button type="submit" className="w-full mb-8" disabled={pending}>
-          {pending ? "Submitting" : "Créer"}
+          {pending ? "Création de l'offre..." : "Créer"}
         </Button>
       </form>
     </Form>

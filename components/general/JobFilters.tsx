@@ -15,11 +15,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
-import { countryList } from "@/app/utils/countriesList";
+import { regionList } from "@/app/utils/countriesList";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback } from "react";
 
-const jobTypes = ["full-time", "part-time", "contract", "internship"];
+const jobTypes = ["Temps-plein", "Mi-temps", "Stage"];
 
 export function JobFilter() {
   const router = useRouter();
@@ -69,7 +69,7 @@ export function JobFilter() {
   return (
     <Card className="col-span-1 h-fit">
       <CardHeader className="flex flex-row justify-between items-center">
-        <CardTitle className="text-2xl font-semibold">Filters</CardTitle>
+        <CardTitle className="text-2xl font-semibold">Filtres</CardTitle>
         <Button
           onClick={clearAllFilter}
           variant="destructive"
@@ -84,7 +84,7 @@ export function JobFilter() {
 
       <CardContent className="space-y-6">
         <div className="space-y-4">
-          <Label className="text-lg font-semibold">Job Type</Label>
+          <Label className="text-lg font-semibold">Type d&apos;emploi</Label>
           <div className="grid grid-cols-2 gap-4">
             {jobTypes.map((job, index) => (
               <div key={index} className="flex items-center space-x-2">
@@ -118,19 +118,18 @@ export function JobFilter() {
               <SelectValue placeholder="Selectionner région" />
             </SelectTrigger>
             <SelectContent>
-              <SelectGroup>
+              {/* <SelectGroup>
                 <SelectLabel>Worldwide</SelectLabel>
                 <SelectItem value="worldwide">
                   <span>🌍</span>
                   <span className="pl-2">Worldwide / Remote</span>
                 </SelectItem>
-              </SelectGroup>
+              </SelectGroup> */}
               <SelectGroup>
                 <SelectLabel>Location</SelectLabel>
-                {countryList.map((country) => (
-                  <SelectItem key={country.code} value={country.name}>
-                    <span>{country.flagEmoji}</span>
-                    <span className="pl-2">{country.name}</span>
+                {regionList.map((region) => (
+                  <SelectItem key={region.code} value={region.name}>
+                    <span className="pl-2">{region.name}</span>
                   </SelectItem>
                 ))}
               </SelectGroup>

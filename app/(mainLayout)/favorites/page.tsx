@@ -13,8 +13,6 @@ async function getFavorites(userId: string) {
         select: {
           id: true,
           jobTitle: true,
-          salaryFrom: true,
-          salaryTo: true,
           employmentType: true,
           location: true,
           createdAt: true,
@@ -41,9 +39,9 @@ export default async function FavoritesPage() {
   if (data.length === 0) {
     return (
       <EmptyState
-        title="No Favorites found"
-        description="You dont have any favorites yet."
-        buttonText="Find a job"
+        title="Aucun favori trouvé"
+        description="Vous n'avez pas encore de favoris."
+        buttonText="Accueil"
         href="/"
       />
     );

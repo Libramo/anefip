@@ -1,11 +1,11 @@
 import React from "react";
 
-interface EmailTemplateProps {
-  jobName: string;
-  JobTitle: string;
-  companyName: string;
-  salary: number;
-}
+// interface EmailTemplateProps {
+//   jobName: string;
+//   JobTitle: string;
+//   companyName: string;
+//   salary: number;
+// }
 
 const EmailTemplate = ({}) => {
   return (

@@ -1,6 +1,6 @@
 import { requireUser } from "@/app/utils/requireUser";
-import { auth } from "@/auth";
-import { redirect } from "next/navigation";
+// import { auth } from "@/auth";
+// import { redirect } from "next/navigation";
 import { createUploadthing, type FileRouter } from "uploadthing/next";
 import { UploadThingError } from "uploadthing/server";
 

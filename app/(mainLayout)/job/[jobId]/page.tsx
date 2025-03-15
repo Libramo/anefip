@@ -1,6 +1,5 @@
 import { saveJobPost, unSaveJobPost } from "@/app/actions";
 import arcjet, { detectBot, tokenBucket } from "@/app/utils/arcjet";
-import { getFlagEmoji } from "@/app/utils/countriesList";
 import { prisma } from "@/app/utils/db";
 import { benefits } from "@/app/utils/listOfBenefits";
 import { auth } from "@/auth";
@@ -112,8 +111,6 @@ export default async function JobIdPage({ params }: { params: Params }) {
 
   const { jobData: data, savedJob } = await getJob(jobId, session?.user?.id);
 
-  const locationFlag = getFlagEmoji(data.location);
-
   return (
     <div className="grid lg:grid-cols-3 gap-8">
       <div className="space-y-8 col-span-2">
@@ -129,10 +126,7 @@ export default async function JobIdPage({ params }: { params: Params }) {
               </Badge>
               <span className="hidden md:inline text-muted-foreground">*</span>
 
-              <Badge className="rounded-full">
-                {locationFlag && <span className="mr-1">{locationFlag}</span>}
-                {data.location}
-              </Badge>
+              <Badge className="rounded-full">{data.location}</Badge>
             </div>
           </div>
 
@@ -252,10 +246,7 @@ export default async function JobIdPage({ params }: { params: Params }) {
             <div className="flex justify-between">
               <span className="text-sm text-muted-foreground">Location</span>
 
-              <span className="text-sm">
-                {locationFlag && <span className="mr-1">{locationFlag}</span>}
-                {data.location}
-              </span>
+              <span className="text-sm">{data.location}</span>
             </div>
           </div>
         </Card>

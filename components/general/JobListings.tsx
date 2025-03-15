@@ -38,8 +38,6 @@ async function getData({
       select: {
         jobTitle: true,
         id: true,
-        salaryFrom: true,
-        salaryTo: true,
         employmentType: true,
         location: true,
         createdAt: true,
@@ -96,9 +94,9 @@ export async function JobListings({
         </div>
       ) : (
         <EmptyState
-          title="No jobs found"
-          description="Try searching for a diffrent job title or location"
-          buttonText="Clear all filters"
+          title="Aucune offre d'emploi"
+          description="Essayez de rechercher un autre titre de poste ou un autre lieu."
+          buttonText="Réinitialiser tous les filtres"
           href="/"
         />
       )}

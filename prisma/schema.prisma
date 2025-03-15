@@ -43,7 +43,7 @@ model Company {
   location String
   about    String
   logo     String
-  website  String
+  website  String?
   xAccount String?
 
   JobPost JobPost[]
@@ -112,8 +112,6 @@ model JobPost {
   jobTitle        String
   employmentType  String
   location        String
-  salaryFrom      Int
-  salaryTo        Int
   jobDescription  String
   listingDuration Int
   benefits        String[]

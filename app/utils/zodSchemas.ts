@@ -8,7 +8,7 @@ export const companySchema = z.object({
     .min(10, "Please provide some information about your company"),
 
   logo: z.string().min(1, "Please upload a logo"),
-  website: z.string().url("Please enter a valid URL"),
+  website: z.string().optional(),
   xAccount: z.string().optional(),
 });
 
@@ -19,21 +19,27 @@ export const jobSeekerSchema = z.object({
 });
 
 export const jobSchema = z.object({
-  jobTitle: z.string().min(2, "Job title must be at least 2 charackters long"),
-  employmentType: z.string().min(1, "Please select an employment type"),
-  location: z.string().min(1, "Please select location"),
-  salaryFrom: z.number().min(1, "Salary from is required"),
-  salaryTo: z.number().min(1, "Salary to is required"),
-  jobDescription: z.string().min(1, "Job description is reqruired"),
-  listingDuration: z.number().min(1, "Listing duration is required"),
+  jobTitle: z
+    .string()
+    .min(2, "L'intitulé du poste doit comporter au moins 2 caractères."),
+  employmentType: z.string().min(1, "Veuillez sélectionner un type d'emploi"),
+  location: z.string().min(1, "Veuillez sélectionner le lieu"),
+  jobDescription: z.string().min(1, "Veuillez donner des details de l'offre"),
+  listingDuration: z
+    .number()
+    .min(
+      1,
+      "Vous devez selectionner une durée de visibilité de l'offre sur le site"
+    ),
 
-  benefits: z.array(z.string()).min(1, "Please select atleast one benefit"),
-  companyName: z.string().min(1, "Company name is requrired"),
-  companyLocation: z.string().min(1, "Company Location is required"),
-  companyAbout: z.string().min(10, "Company description is required"),
+  benefits: z
+    .array(z.string())
+    .min(1, "Veuillez sélectionner au moins un avantage"),
+  companyName: z.string().min(1, "Le nom est requis"),
+  companyLocation: z.string().min(1, "La localisation est requise"),
+  companyAbout: z.string().min(10, "La description de l'offre est requise"),
 
-  companyLogo: z.string().min(1, "Logo is required"),
-
-  companyWebsite: z.string().min(1, "Company website is required"),
+  companyLogo: z.string().min(1, "Le logo est requis"),
+  companyWebsite: z.string().optional(),
   companyXAccount: z.string().optional(),
 });
