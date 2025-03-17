@@ -25,9 +25,13 @@ export function JobFilter() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  //get currnet filters from the URL
-  const currentJobTypes = searchParams.get("jobTypes")?.split(",") || [];
-  const currentLocation = searchParams.get("location") || "";
+  // Get current filters from the URL
+  const currentJobTypes =
+    searchParams
+      .get("jobTypes")
+      ?.split(",")
+      .map((jobType) => jobType.toLowerCase()) || [];
+  const currentLocation = searchParams.get("location")?.toLowerCase() || "";
 
   function clearAllFilter() {
     router.push("/");
@@ -38,7 +42,7 @@ export function JobFilter() {
       const params = new URLSearchParams(searchParams.toString());
 
       if (value) {
-        params.set(name, value);
+        params.set(name, value.toLowerCase()); // Ensure the value is lowercase before setting
       } else {
         params.delete(name);
       }
@@ -52,9 +56,9 @@ export function JobFilter() {
     const current = new Set(currentJobTypes);
 
     if (checked) {
-      current.add(jobType);
+      current.add(jobType.toLowerCase()); // Ensure the jobType is lowercase before adding
     } else {
-      current.delete(jobType);
+      current.delete(jobType.toLowerCase()); // Ensure the jobType is lowercase before deleting
     }
 
     const newValue = Array.from(current).join(",");
@@ -63,8 +67,49 @@ export function JobFilter() {
   }
 
   function handleLocationChange(location: string) {
-    router.push(`?${createQueryString("location", location)}`);
+    router.push(`?${createQueryString("location", location.toLowerCase())}`); // Lowercase location before setting
   }
+
+  // //get currnet filters from the URL
+  // const currentJobTypes = searchParams.get("jobTypes")?.split(",") || [];
+  // const currentLocation = searchParams.get("location") || "";
+
+  // function clearAllFilter() {
+  //   router.push("/");
+  // }
+
+  // const createQueryString = useCallback(
+  //   (name: string, value: string) => {
+  //     const params = new URLSearchParams(searchParams.toString());
+
+  //     if (value) {
+  //       params.set(name, value);
+  //     } else {
+  //       params.delete(name);
+  //     }
+
+  //     return params.toString();
+  //   },
+  //   [searchParams]
+  // );
+
+  // function handleJobTypeChange(jobType: string, checked: boolean) {
+  //   const current = new Set(currentJobTypes);
+
+  //   if (checked) {
+  //     current.add(jobType);
+  //   } else {
+  //     current.delete(jobType);
+  //   }
+
+  //   const newValue = Array.from(current).join(",");
+
+  //   router.push(`?${createQueryString("jobTypes", newValue)}`);
+  // }
+
+  // function handleLocationChange(location: string) {
+  //   router.push(`?${createQueryString("location", location)}`);
+  // }
 
   return (
     <Card className="col-span-1 h-fit">
