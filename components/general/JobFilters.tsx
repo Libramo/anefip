@@ -63,6 +63,8 @@ export function JobFilter() {
 
     const newValue = Array.from(current).join(",");
 
+    console.log(newValue);
+
     router.push(`?${createQueryString("jobTypes", newValue)}`);
   }
 
