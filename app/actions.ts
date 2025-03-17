@@ -174,7 +174,7 @@ export async function createJob(data: z.infer<typeof jobSchema>) {
             description: pricingTier.description,
             images: [company.logo],
           },
-          currency: "FDJ",
+          currency: "DJF",
           unit_amount: pricingTier.price * 100,
         },
         quantity: 1,
