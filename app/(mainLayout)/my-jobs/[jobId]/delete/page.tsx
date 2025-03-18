@@ -21,10 +21,10 @@ export default async function DeleteJob({ params }: { params: Params }) {
     <div>
       <Card className="max-w-lg mx-auto mt-28">
         <CardHeader>
-          <CardTitle>Are you absolutely sure?</CardTitle>
+          <CardTitle>Êtes-vous absolument sûr ?</CardTitle>
           <CardDescription>
-            This action cannot be undone. This will permentanly delete you job
-            listing and remove all of your data from our servers.
+            Cette action ne peut être annulée. Cette action supprimera
+            définitivement votre poste de nos serveurs.
           </CardDescription>
         </CardHeader>
         <CardFooter className="flex items-center justify-between">
@@ -33,7 +33,7 @@ export default async function DeleteJob({ params }: { params: Params }) {
             className={buttonVariants({ variant: "secondary" })}
           >
             <ArrowLeft />
-            Cancel
+            Annuler
           </Link>
 
           <form
@@ -44,7 +44,7 @@ export default async function DeleteJob({ params }: { params: Params }) {
             }}
           >
             <GeneralSubmitButton
-              text="Delete Job"
+              text="Supprimer le poste"
               variant="destructive"
               icon={<TrashIcon />}
             />

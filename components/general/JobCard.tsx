@@ -48,30 +48,24 @@ export function JobCard({ job }: iAppProps) {
 
                 <Separator orientation="vertical" className="bg-primary" />
 
-                <Badge className="rounded-full" variant="secondary">
+                <Badge className="rounded-full capitalize" variant="secondary">
                   {job.employmentType}
                 </Badge>
 
                 <Separator orientation="vertical" className="bg-primary" />
 
-                <Badge className="rounded-full">{job.location}</Badge>
+                <Badge className="rounded-full capitalize">
+                  {job.location}
+                </Badge>
 
                 <Separator orientation="vertical" className="bg-primary" />
-
-                {/* <p className="flex space-x-3 text-sm text-muted-foreground">
-                  {formatCurrency(job.salaryFrom)}{" "}
-                  <span>
-                    <MoveHorizontal />
-                  </span>
-                  {formatCurrency(job.salaryTo)}
-                </p> */}
               </div>
             </div>
 
             <div className="md:ml-auto text-right">
               <div className="flex items-center gap-2 justify-end">
                 <MapPin className="size-4" />
-                <h1>{job.location}</h1>
+                <h1 className="capitalize">{job.location}</h1>
               </div>
 
               <p className="text-sm text-muted-foreground md:text-right">

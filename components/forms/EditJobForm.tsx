@@ -26,7 +26,7 @@ import { JobDescriptionEditor } from "../richTextEditor.tsx/JobDescriptionEditor
 import { BenefitsSelector } from "../general/BenefitsSelector";
 import Image from "next/image";
 import { Button } from "../ui/button";
-import { XIcon } from "lucide-react";
+import { Loader, XIcon } from "lucide-react";
 import { UploadDropzone } from "../general/UploadThingReexported";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -79,6 +79,7 @@ export function EditJobForm({ jobPost }: iAppProps) {
 
   async function onSubmit(values: z.infer<typeof jobSchema>) {
     try {
+      console.log(values);
       setPending(true);
       await editJobPost(values, jobPost.id);
     } catch (error) {
@@ -97,7 +98,9 @@ export function EditJobForm({ jobPost }: iAppProps) {
       >
         <Card>
           <CardHeader>
-            <CardTitle>Job Information</CardTitle>
+            <CardTitle>
+              Informations sur le poste (offre d&apos;emploi)
+            </CardTitle>
           </CardHeader>
           <CardContent className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -106,9 +109,9 @@ export function EditJobForm({ jobPost }: iAppProps) {
                 name="jobTitle"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Job Title</FormLabel>
+                    <FormLabel>Titre du poste</FormLabel>
                     <FormControl>
-                      <Input placeholder="Job title" {...field} />
+                      <Input placeholder="Titre...." {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -120,24 +123,20 @@ export function EditJobForm({ jobPost }: iAppProps) {
                 name="employmentType"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Employment Type</FormLabel>
+                    <FormLabel>Type de poste</FormLabel>
                     <Select
                       onValueChange={field.onChange}
                       defaultValue={field.value}
                     >
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder="Select Emplyoment Type" />
+                          <SelectValue placeholder="Selectionner un type de poste" />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        <SelectGroup>
-                          <SelectLabel>Employment Type</SelectLabel>
-                          <SelectItem value="full-time">Full Time</SelectItem>
-                          <SelectItem value="part-time">Part Time</SelectItem>
-                          <SelectItem value="contract">Contract</SelectItem>
-                          <SelectItem value="internship">Internship</SelectItem>
-                        </SelectGroup>
+                        <SelectItem value="temps-plein">Temps-plein</SelectItem>
+                        <SelectItem value="mi-temps">Mi-temps</SelectItem>
+                        <SelectItem value="stage">Stage</SelectItem>
                       </SelectContent>
                     </Select>
                     <FormMessage />
@@ -152,28 +151,24 @@ export function EditJobForm({ jobPost }: iAppProps) {
                 name="location"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Job Location</FormLabel>
+                    <FormLabel>Région</FormLabel>
                     <Select
                       onValueChange={field.onChange}
                       defaultValue={field.value}
                     >
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder="Select Location" />
+                          <SelectValue placeholder="Selectionner une région" />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
                         <SelectGroup>
-                          <SelectLabel>Worldwide</SelectLabel>
-                          <SelectItem value="worldwide">
-                            <span>🌍</span>
-                            <span className="pl-2">Worldwide / Remote</span>
-                          </SelectItem>
-                        </SelectGroup>
-                        <SelectGroup>
                           <SelectLabel>Location</SelectLabel>
                           {regionList.map((region) => (
-                            <SelectItem key={region.code} value={region.name}>
+                            <SelectItem
+                              key={region.code}
+                              value={region.name.toLowerCase()}
+                            >
                               <span className="pl-2">{region.name}</span>
                             </SelectItem>
                           ))}
@@ -184,18 +179,6 @@ export function EditJobForm({ jobPost }: iAppProps) {
                   </FormItem>
                 )}
               />
-
-              {/* <FormItem>
-                <FormLabel>Salary Range</FormLabel>
-                <FormControl>
-                  <SalaryRangeSelector
-                    control={form.control}
-                    minSalary={10000}
-                    maxSalary={1000000}
-                    step={2000}
-                  />
-                </FormControl>
-              </FormItem> */}
             </div>
 
             <FormField
@@ -203,7 +186,7 @@ export function EditJobForm({ jobPost }: iAppProps) {
               name="jobDescription"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Job Description</FormLabel>
+                  <FormLabel>Description du poste</FormLabel>
                   <FormControl>
                     <JobDescriptionEditor field={field as any} />
                   </FormControl>
@@ -217,7 +200,7 @@ export function EditJobForm({ jobPost }: iAppProps) {
               name="benefits"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Benefits</FormLabel>
+                  <FormLabel>Avantages</FormLabel>
                   <FormControl>
                     <BenefitsSelector field={field as any} />
                   </FormControl>
@@ -230,7 +213,7 @@ export function EditJobForm({ jobPost }: iAppProps) {
 
         <Card>
           <CardHeader>
-            <CardTitle>Company Information</CardTitle>
+            <CardTitle>Informations sur la structure</CardTitle>
           </CardHeader>
           <CardContent className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -239,7 +222,7 @@ export function EditJobForm({ jobPost }: iAppProps) {
                 name="companyName"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Company name</FormLabel>
+                    <FormLabel>Nom de la structure</FormLabel>
                     <FormControl>
                       <Input placeholder="Company name..." {...field} />
                     </FormControl>
@@ -253,32 +236,25 @@ export function EditJobForm({ jobPost }: iAppProps) {
                 name="companyLocation"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Company Location</FormLabel>
+                    <FormLabel>Siège de la structure</FormLabel>
                     <Select
                       onValueChange={field.onChange}
                       defaultValue={field.value}
                     >
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder="Select Location" />
+                          <SelectValue placeholder="Selectionner une région" />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        <SelectGroup>
-                          <SelectLabel>Worldwide</SelectLabel>
-                          <SelectItem value="worldwide">
-                            <span>🌍</span>
-                            <span className="pl-2">Worldwide / Remote</span>
+                        {regionList.map((region) => (
+                          <SelectItem
+                            key={region.code}
+                            value={region.name.toLowerCase()}
+                          >
+                            <span className="pl-2">{region.name}</span>
                           </SelectItem>
-                        </SelectGroup>
-                        <SelectGroup>
-                          <SelectLabel>Location</SelectLabel>
-                          {regionList.map((region) => (
-                            <SelectItem key={region.code} value={region.name}>
-                              <span className="pl-2">{region.name}</span>
-                            </SelectItem>
-                          ))}
-                        </SelectGroup>
+                        ))}
                       </SelectContent>
                     </Select>
                     <FormMessage />
@@ -293,16 +269,16 @@ export function EditJobForm({ jobPost }: iAppProps) {
                 name="companyWebsite"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Company Website</FormLabel>
+                    <FormLabel>Site web</FormLabel>
                     <FormControl>
-                      <Input placeholder="Company Website..." {...field} />
+                      <Input placeholder="Site web..." {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
 
-              <FormField
+              {/* <FormField
                 control={form.control}
                 name="companyXAccount"
                 render={({ field }) => (
@@ -314,7 +290,7 @@ export function EditJobForm({ jobPost }: iAppProps) {
                     <FormMessage />
                   </FormItem>
                 )}
-              />
+              /> */}
             </div>
 
             <FormField
@@ -376,7 +352,7 @@ export function EditJobForm({ jobPost }: iAppProps) {
                       )}
                     </div>
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage className="text-primary" />
                 </FormItem>
               )}
             />
@@ -384,7 +360,8 @@ export function EditJobForm({ jobPost }: iAppProps) {
         </Card>
 
         <Button type="submit" className="w-full" disabled={pending}>
-          {pending ? "Submitting" : "Edit Job Post"}
+          <Loader className={!pending ? "hidden" : "animate-spin"} />
+          {pending ? "En cours...." : "Modifie l'offre"}
         </Button>
       </form>
     </Form>

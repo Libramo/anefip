@@ -8,14 +8,17 @@ async function getData({
   page = 1,
   pageSize = 2,
   jobTypes = [],
-  location = "",
+  locations = [],
 }: {
   page: number;
   pageSize: number;
   jobTypes: string[];
-  location: string;
+  locations: string[];
 }) {
   const skip = (page - 1) * pageSize;
+
+  console.log("JOBTYPES", jobTypes);
+  console.log("LOCATIONS", locations);
 
   const where = {
     status: JobPostStatus.ACTIVE,
@@ -24,10 +27,9 @@ async function getData({
         in: jobTypes,
       },
     }),
-    ...(location &&
-      location !== "worldwide" && {
-        location: location,
-      }),
+    ...(locations.length > 0 && {
+      location: { in: locations },
+    }),
   };
 
   const [data, totalCount] = await Promise.all([
@@ -62,6 +64,9 @@ async function getData({
     }),
   ]);
 
+  // console.log(locations);
+  // console.log(where);
+
   return {
     jobs: data,
     totalPages: Math.ceil(totalCount / pageSize),
@@ -71,17 +76,17 @@ async function getData({
 export async function JobListings({
   currentPage,
   jobTypes,
-  location,
+  locations,
 }: {
   currentPage: number;
   jobTypes: string[];
-  location: string;
+  locations: string[];
 }) {
   const { jobs, totalPages } = await getData({
     page: currentPage,
     pageSize: 2,
     jobTypes: jobTypes,
-    location: location,
+    locations: locations,
   });
 
   return (

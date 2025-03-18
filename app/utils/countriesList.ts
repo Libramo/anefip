@@ -10,7 +10,7 @@
 
 export const regionList = [
   {
-    name: "Ali-sabieh",
+    name: "Ali-Sabieh",
     code: "AS",
   },
   {
@@ -18,7 +18,7 @@ export const regionList = [
     code: "AR",
   },
   {
-    name: "Djibouti-ville",
+    name: "Djibouti-Ville",
     code: "DJ",
   },
   {

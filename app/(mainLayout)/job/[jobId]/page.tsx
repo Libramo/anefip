@@ -117,7 +117,7 @@ export default async function JobIdPage({ params }: { params: Params }) {
         {/* header */}
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold">Marketing Manager</h1>
+            <h1 className="text-3xl font-bold capitalize">{data.jobTitle}</h1>
             <div className="flex items-center gap-2 mt-2">
               <p className="font-medium">{data.jobTitle}</p>
               <span className="hidden md:inline text-muted-foreground">*</span>
@@ -192,8 +192,8 @@ export default async function JobIdPage({ params }: { params: Params }) {
             <div>
               <h3 className="font-semibold">Apply now</h3>
               <p className="text-sm text-muted-foreground mt-1">
-                Please let {data.Company.name} know you found this job on
-                JobMarshal. This helps us grow!
+                Veuillez faire savoir à {data.Company.name} que vous avez trouvé
+                cet emploi sur Anefip. Cela nous aide à evoluer !
               </p>
             </div>
 
@@ -203,7 +203,7 @@ export default async function JobIdPage({ params }: { params: Params }) {
 
         {/* Job details card */}
         <Card className="p-6">
-          <h3 className="font-semibold">About the Job</h3>
+          <h3 className="font-semibold">Detail de l&apos;offre</h3>
 
           <div className="space-y-2">
             <div className="flex justify-between">

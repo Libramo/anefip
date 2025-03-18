@@ -74,6 +74,15 @@ export default async function MyJobsPage() {
         <Card>
           <CardHeader>
             <CardTitle>Postes à pourvoir</CardTitle>
+            <div className="flex">
+              <Image
+                src={data[0].Company.logo}
+                height={30}
+                width={60}
+                alt="Company Logo "
+              />
+              <CardTitle>{data[0].Company.name}</CardTitle>
+            </div>
             <CardDescription>
               Manage your job listings and applications here.
             </CardDescription>
@@ -82,34 +91,23 @@ export default async function MyJobsPage() {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Logo</TableHead>
-                  <TableHead>Company</TableHead>
-                  <TableHead>Job Title</TableHead>
+                  <TableHead>Titre du Poste</TableHead>
                   <TableHead>Status</TableHead>
-                  <TableHead>Created at</TableHead>
+                  <TableHead>Date de création</TableHead>
                   <TableHead className="text-right">Actions</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {data.map((listing) => (
                   <TableRow key={listing.id}>
-                    <TableCell>
-                      <Image
-                        src={listing.Company.logo}
-                        alt="logo of company"
-                        width={40}
-                        height={40}
-                        className="rounded-md size-10"
-                      />
-                    </TableCell>
-                    <TableCell>{listing.Company.name}</TableCell>
                     <TableCell>{listing.jobTitle}</TableCell>
                     <TableCell>
                       {listing.status.charAt(0).toUpperCase() +
                         listing.status.slice(1).toLowerCase()}
                     </TableCell>
+
                     <TableCell>
-                      {listing.createdAt.toLocaleDateString("en-US", {
+                      {listing.createdAt.toLocaleDateString("fr-FR", {
                         month: "long",
                         day: "numeric",
                         year: "numeric",
@@ -127,7 +125,7 @@ export default async function MyJobsPage() {
                           <DropdownMenuItem asChild>
                             <Link href={`/my-jobs/${listing.id}/edit`}>
                               <PenBoxIcon />
-                              Edit Job
+                              Modifier le poste
                             </Link>
                           </DropdownMenuItem>
                           <CopyLinkMenuItem
@@ -138,7 +136,7 @@ export default async function MyJobsPage() {
                           <DropdownMenuItem asChild>
                             <Link href={`/my-jobs/${listing.id}/delete`}>
                               <XCircle />
-                              Delete Job
+                              Supprimer poste
                             </Link>
                           </DropdownMenuItem>
                         </DropdownMenuContent>

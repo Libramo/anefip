@@ -1,25 +1,42 @@
 "use client";
 
-import { XIcon } from "lucide-react";
+import { PlusCircle, XIcon } from "lucide-react";
 import { Button } from "../ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { Label } from "../ui/label";
 import { Checkbox } from "../ui/checkbox";
 import { Separator } from "../ui/separator";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "../ui/select";
+// import {
+//   Select,
+//   SelectContent,
+//   SelectGroup,
+//   SelectItem,
+//   SelectLabel,
+//   SelectTrigger,
+//   SelectValue,
+// } from "../ui/select";
 import { regionList } from "@/app/utils/countriesList";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback } from "react";
+// import {
+//   DropdownMenu,
+//   DropdownMenuCheckboxItem,
+//   DropdownMenuContent,
+//   DropdownMenuTrigger,
+// } from "../ui/dropdown-menu";
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
+// import { Badge } from "../ui/badge";
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+  // CommandSeparator,
+} from "../ui/command";
 
-const jobTypes = ["Temps-plein", "Mi-temps", "Stage"];
+const jobTypes = ["temps-plein", "mi-temps", "stage"];
 
 export function JobFilter() {
   const router = useRouter();
@@ -31,7 +48,11 @@ export function JobFilter() {
       .get("jobTypes")
       ?.split(",")
       .map((jobType) => jobType.toLowerCase()) || [];
-  const currentLocation = searchParams.get("location")?.toLowerCase() || "";
+  const currentRegions =
+    searchParams
+      .get("location")
+      ?.split(",")
+      .map((region) => region.toLowerCase()) || [];
 
   function clearAllFilter() {
     router.push("/");
@@ -68,57 +89,27 @@ export function JobFilter() {
     router.push(`?${createQueryString("jobTypes", newValue)}`);
   }
 
-  function handleLocationChange(location: string) {
-    router.push(`?${createQueryString("location", location.toLowerCase())}`); // Lowercase location before setting
+  function handleRegionChange(region: string, checked: boolean) {
+    const current = new Set(currentRegions);
+
+    if (checked) {
+      current.add(region.toLowerCase()); // Ensure the jobType is lowercase before adding
+    } else {
+      current.delete(region.toLowerCase()); // Ensure the jobType is lowercase before deleting
+    }
+
+    const newValue = Array.from(current).join(",");
+
+    router.push(`?${createQueryString("location", newValue)}`);
   }
 
-  // //get currnet filters from the URL
-  // const currentJobTypes = searchParams.get("jobTypes")?.split(",") || [];
-  // const currentLocation = searchParams.get("location") || "";
-
-  // function clearAllFilter() {
-  //   router.push("/");
-  // }
-
-  // const createQueryString = useCallback(
-  //   (name: string, value: string) => {
-  //     const params = new URLSearchParams(searchParams.toString());
-
-  //     if (value) {
-  //       params.set(name, value);
-  //     } else {
-  //       params.delete(name);
-  //     }
-
-  //     return params.toString();
-  //   },
-  //   [searchParams]
-  // );
-
-  // function handleJobTypeChange(jobType: string, checked: boolean) {
-  //   const current = new Set(currentJobTypes);
-
-  //   if (checked) {
-  //     current.add(jobType);
-  //   } else {
-  //     current.delete(jobType);
-  //   }
-
-  //   const newValue = Array.from(current).join(",");
-
-  //   router.push(`?${createQueryString("jobTypes", newValue)}`);
-  // }
-
-  // function handleLocationChange(location: string) {
-  //   router.push(`?${createQueryString("location", location)}`);
-  // }
-
+  const totalRegions = regionList.length;
   return (
     <Card className="col-span-1 h-fit">
       <CardHeader className="flex flex-row justify-between items-center">
         <CardTitle className="text-2xl font-semibold">Filtres</CardTitle>
         <Button
-          onClick={clearAllFilter}
+          onClick={() => clearAllFilter()}
           variant="destructive"
           size="sm"
           className="h-8"
@@ -132,7 +123,7 @@ export function JobFilter() {
       <CardContent className="space-y-6">
         <div className="space-y-4">
           <Label className="text-lg font-semibold">Type d&apos;emploi</Label>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid gap-4">
             {jobTypes.map((job, index) => (
               <div key={index} className="flex items-center space-x-2">
                 <Checkbox
@@ -142,7 +133,7 @@ export function JobFilter() {
                   id={job}
                   checked={currentJobTypes.includes(job)}
                 />
-                <Label className="text-sm font-medium" htmlFor={job}>
+                <Label className="text-sm font-medium capitalize" htmlFor={job}>
                   {job}
                 </Label>
               </div>
@@ -155,33 +146,60 @@ export function JobFilter() {
         <div className="space-y-4">
           <Label className="text-lg font-semibold">Régions</Label>
 
-          <Select
-            onValueChange={(location) => {
-              handleLocationChange(location);
-            }}
-            value={currentLocation}
-          >
-            <SelectTrigger>
-              <SelectValue placeholder="Selectionner région" />
-            </SelectTrigger>
-            <SelectContent>
-              {/* <SelectGroup>
-                <SelectLabel>Worldwide</SelectLabel>
-                <SelectItem value="worldwide">
-                  <span>🌍</span>
-                  <span className="pl-2">Worldwide / Remote</span>
-                </SelectItem>
-              </SelectGroup> */}
-              <SelectGroup>
-                <SelectLabel>Location</SelectLabel>
-                {regionList.map((region) => (
-                  <SelectItem key={region.code} value={region.name}>
-                    <span className="pl-2">{region.name}</span>
-                  </SelectItem>
-                ))}
-              </SelectGroup>
-            </SelectContent>
-          </Select>
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button
+                variant="outline"
+                size="sm"
+                className="h-8 border-dashed capitalize"
+              >
+                <PlusCircle />
+                {currentRegions.length > 0
+                  ? currentRegions.length === totalRegions
+                    ? "Toutes les régions sont selectionnées"
+                    : currentRegions.length < 3
+                    ? `Regions: ${currentRegions.join(", ")}`
+                    : `${currentRegions.length} regions selected`
+                  : "Select Regions"}
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-[200px] p-0" align="start">
+              <Command>
+                <CommandInput placeholder="Search Region" />
+                <CommandList>
+                  <CommandEmpty>Pas de resultats</CommandEmpty>
+                  <CommandGroup>
+                    <div className="max-h-60 overflow-y-auto">
+                      {regionList.map((region) => {
+                        const isSelected = currentRegions.includes(
+                          region.name.toLowerCase()
+                        );
+                        return (
+                          <CommandItem
+                            key={region.code}
+                            onSelect={() =>
+                              handleRegionChange(region.name, !isSelected)
+                            }
+                          >
+                            <div
+                              className={`mr-2 flex h-4 w-4 items-center justify-center rounded-sm border border-primary ${
+                                isSelected
+                                  ? "bg-primary text-primary-foreground"
+                                  : "opacity-50"
+                              }`}
+                            >
+                              {/* <Check /> */}
+                            </div>
+                            <span>{region.name}</span>
+                          </CommandItem>
+                        );
+                      })}
+                    </div>
+                  </CommandGroup>
+                </CommandList>
+              </Command>
+            </PopoverContent>
+          </Popover>
         </div>
       </CardContent>
     </Card>

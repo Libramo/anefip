@@ -81,6 +81,7 @@ export function CreateJobForm({
     try {
       setPending(true);
       await createJob(values);
+      console.log(values);
     } catch (error) {
       if (error instanceof Error && error.message !== "NEXT_REDIRECT") {
         console.log("something went wrong");
@@ -131,7 +132,7 @@ export function CreateJobForm({
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        <SelectItem value="temps-plein">Temps plein</SelectItem>
+                        <SelectItem value="temps-plein">Temps-plein</SelectItem>
                         <SelectItem value="mi-temps">Mi-temps</SelectItem>
                         <SelectItem value="stage">Stage</SelectItem>
                       </SelectContent>
@@ -160,7 +161,10 @@ export function CreateJobForm({
                       </FormControl>
                       <SelectContent>
                         {regionList.map((region) => (
-                          <SelectItem key={region.code} value={region.name}>
+                          <SelectItem
+                            key={region.code}
+                            value={region.name.toLowerCase()}
+                          >
                             <span className="pl-2">{region.name}</span>
                           </SelectItem>
                         ))}

@@ -22,7 +22,7 @@ export default async function PaymentSuccess() {
             </p>
 
             <Button asChild className="w-full mt-5">
-              <Link href="/">Go back to Homepage</Link>
+              <Link href="/">Accueil</Link>
             </Button>
           </div>
         </div>

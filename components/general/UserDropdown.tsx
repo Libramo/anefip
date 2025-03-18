@@ -43,7 +43,7 @@ export function UserDropdown({ email, image, name }: iAppProps) {
             <Link href="/favorites">
               <Heart size={16} strokeWidth={2} className="opacity-60" />
 
-              <span>Favorite Jobs</span>
+              <span>Favoris</span>
             </Link>
           </DropdownMenuItem>
 
@@ -51,7 +51,7 @@ export function UserDropdown({ email, image, name }: iAppProps) {
             <Link href="/my-jobs">
               <Layers2 size={16} strokeWidth={2} className="opacity-60" />
 
-              <span>My Job Listings</span>
+              <span>Liste des postes</span>
             </Link>
           </DropdownMenuItem>
         </DropdownMenuGroup>
@@ -68,7 +68,7 @@ export function UserDropdown({ email, image, name }: iAppProps) {
             <button className="flex w-full items-center gap-2">
               <LogOut size={16} strokeWidth={2} className="opacity-60" />
 
-              <span>Logout</span>
+              <span>Se déconnecter</span>
             </button>
           </form>
         </DropdownMenuItem>

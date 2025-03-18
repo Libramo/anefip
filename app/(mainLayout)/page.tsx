@@ -16,11 +16,11 @@ export default async function Home({ searchParams }: SearchParams) {
 
   const currentPage = Number(params.page) || 1;
   const jobTypes = params.jobTypes?.split(",") || [];
-  const location = params.location || "";
+  const locations = params.location?.split(",") || [];
 
   const filterKey = `page=${currentPage};types=${jobTypes.join(
     ","
-  )};location=${location}`;
+  )};locations=${locations}`;
 
   return (
     <div className="grid grid-cols-4 gap-8">
@@ -29,7 +29,7 @@ export default async function Home({ searchParams }: SearchParams) {
       <div className="col-span-3 flex flex-col gap-6">
         <Suspense fallback={<JobListingLoading />} key={filterKey}>
           <JobListings
-            location={location}
+            locations={locations}
             currentPage={currentPage}
             jobTypes={jobTypes}
           />

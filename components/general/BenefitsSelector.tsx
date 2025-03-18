@@ -40,7 +40,7 @@ export function BenefitsSelector({ field }: iAppProps) {
       </div>
 
       <div className="mt-4 text-sm text-muted-foreground">
-        Selected Benefits:{" "}
+        Avantages selectionnés:{" "}
         <span className="text-primary">{(field.value || []).length}</span>
       </div>
     </div>

@@ -35,13 +35,13 @@ export function OnboardingForm() {
       <div className="flex items-center gap-4 mb-10">
         <Image
           src={Logo}
-          alt="JobMarshal Logo"
+          alt="Anefip Logo"
           width={50}
           height={50}
           className="rounded-full"
         />
         <h1 className="text-4xl font-bold">
-          anefip<span className="text-primary">DJIB</span>
+          Anefip<span className="text-primary">DJIB</span>
         </h1>
       </div>
 
